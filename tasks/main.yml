@@ -1,7 +1,7 @@
 ---
 # tasks file for cloudwatch-monitoring
 - name: "Install Perl dependencies needed by cloudwatch-monitoring script"
-  yum: name={{item}} state=present
+  package: name={{item}} state=present
   when: ansible_os_family == "RedHat"
   with_items:
     - perl-Time-HiRes
@@ -11,6 +11,13 @@
     - perl-libwww-perl
     - perl-LWP-Protocol-https
     - perl-Digest-SHA
+
+- name: "Install Perl dependencies needed by cloudwatch-monitoring script"
+  package: name={{item}} state=present
+  when: ansible_os_family == "Debian"
+  with_items:
+    - libwww-perl
+    - libdatetime-perl
 
 - include: install_aws_mon.yml
 
